@@ -8,7 +8,7 @@ import pandas as pd
 import psycopg2
 import psycopg2.extras
 
-from ..api import VectorDB, DBCaseConfig
+from ..api import VectorDB, DBCaseConfig, IndexType
 
 log = logging.getLogger(__name__) 
 
@@ -19,7 +19,7 @@ class PgVector(VectorDB):
         dim: int,
         db_config: dict,
         db_case_config: DBCaseConfig,
-        collection_name: str = "PgVectorCollection",
+        collection_name: str = "pgvector_collection",
         drop_old: bool = False,
         **kwargs,
     ):
@@ -29,7 +29,7 @@ class PgVector(VectorDB):
         self.table_name = collection_name
         self.dim = dim
 
-        self._index_name = "pqvector_index"
+        self._index_name = "pgvector_index"
         self._primary_field = "id"
         self._vector_field = "embedding"
 
@@ -102,13 +102,31 @@ class PgVector(VectorDB):
         
         self.cursor.execute(f'DROP INDEX IF EXISTS "{self._index_name}"')
         self.conn.commit()
-    
+
+    def _get_index_type_str(self, index_type: IndexType):
+        match index_type:
+            case IndexType.HNSW:
+                return "hnsw"
+            case IndexType.IVFFlat:
+                return "ivfflat"
+            case _:
+                raise KeyError(f"{index_type.value} not supported on pgvector")
+
     def _create_index(self):
         assert self.conn is not None, "Connection is not initialized"
         assert self.cursor is not None, "Cursor is not initialized"
         
         index_param = self.case_config.index_param()
-        self.cursor.execute(f'CREATE INDEX IF NOT EXISTS {self._index_name} ON public."{self.table_name}" USING ivfflat (embedding {index_param["metric"]}) WITH (lists={index_param["lists"]});')
+        query = f'CREATE INDEX IF NOT EXISTS {self._index_name} ON public."{self.table_name}"'
+        query += f' USING {self._get_index_type_str(index_param["index_type"])} (embedding {index_param["metric_type"]})'
+
+        options = ", ".join(f'{k} = {v}' for k, v in index_param.get("params", dict()).items())
+        if options:
+            query += f" WITH ({options})"
+        query += ";"
+
+        print(query)
+        self.cursor.execute(query)
         self.conn.commit()
         
     def _create_table(self, dim : int):
