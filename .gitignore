@@ -8,4 +8,5 @@ __MACOSX
 .DS_Store
 build/
 venv/
+.venv/
 .idea/
