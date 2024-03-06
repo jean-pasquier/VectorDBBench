@@ -80,7 +80,7 @@ CaseConfigParamInput_M = CaseConfigInput(
         "value": 30,
     },
     isDisplayed=lambda config: config.get(CaseConfigParamType.IndexType, None)
-    == IndexType.HNSW.value,
+                               == IndexType.HNSW.value,
 )
 
 CaseConfigParamInput_EFConstruction_Milvus = CaseConfigInput(
@@ -92,7 +92,7 @@ CaseConfigParamInput_EFConstruction_Milvus = CaseConfigInput(
         "value": 360,
     },
     isDisplayed=lambda config: config[CaseConfigParamType.IndexType]
-    == IndexType.HNSW.value,
+                               == IndexType.HNSW.value,
 )
 
 CaseConfigParamInput_EFConstruction_Weaviate = CaseConfigInput(
@@ -115,6 +115,16 @@ CaseConfigParamInput_EFConstruction_ES = CaseConfigInput(
     },
 )
 
+CaseConfigParamInput_EFConstruction_PgVector = CaseConfigInput(
+    label=CaseConfigParamType.EFConstruction,
+    inputType=InputType.Number,
+    inputConfig={
+        "min": 8,
+        "max": 512,
+        "value": 64,
+    },
+)
+
 CaseConfigParamInput_EFConstruction_PgVectoRS = CaseConfigInput(
     label=CaseConfigParamType.EFConstruction,
     inputType=InputType.Number,
@@ -124,7 +134,7 @@ CaseConfigParamInput_EFConstruction_PgVectoRS = CaseConfigInput(
         "value": 360,
     },
     isDisplayed=lambda config: config[CaseConfigParamType.IndexType]
-    == IndexType.HNSW.value,
+                               == IndexType.HNSW.value,
 )
 
 CaseConfigParamInput_M_ES = CaseConfigInput(
@@ -156,7 +166,7 @@ CaseConfigParamInput_EF_Milvus = CaseConfigInput(
         "value": 100,
     },
     isDisplayed=lambda config: config[CaseConfigParamType.IndexType]
-    == IndexType.HNSW.value,
+                               == IndexType.HNSW.value,
 )
 
 CaseConfigParamInput_EF_Weaviate = CaseConfigInput(
@@ -184,7 +194,7 @@ CaseConfigParamInput_SearchList = CaseConfigInput(
         "value": 100,
     },
     isDisplayed=lambda config: config.get(CaseConfigParamType.IndexType, None)
-    == IndexType.DISKANN.value,
+                               == IndexType.DISKANN.value,
 )
 
 CaseConfigParamInput_Nlist = CaseConfigInput(
@@ -196,12 +206,12 @@ CaseConfigParamInput_Nlist = CaseConfigInput(
         "value": 1024,
     },
     isDisplayed=lambda config: config.get(CaseConfigParamType.IndexType, None)
-    in [
-        IndexType.IVFFlat.value,
-        IndexType.IVFSQ8.value,
-        IndexType.GPU_IVF_FLAT.value,
-        IndexType.GPU_IVF_PQ.value,
-    ],
+                               in [
+                                   IndexType.IVFFlat.value,
+                                   IndexType.IVFSQ8.value,
+                                   IndexType.GPU_IVF_FLAT.value,
+                                   IndexType.GPU_IVF_PQ.value,
+                               ],
 )
 
 CaseConfigParamInput_Nprobe = CaseConfigInput(
@@ -213,12 +223,12 @@ CaseConfigParamInput_Nprobe = CaseConfigInput(
         "value": 64,
     },
     isDisplayed=lambda config: config.get(CaseConfigParamType.IndexType, None)
-    in [
-        IndexType.IVFFlat.value,
-        IndexType.IVFSQ8.value,
-        IndexType.GPU_IVF_FLAT.value,
-        IndexType.GPU_IVF_PQ.value,
-    ],
+                               in [
+                                   IndexType.IVFFlat.value,
+                                   IndexType.IVFSQ8.value,
+                                   IndexType.GPU_IVF_FLAT.value,
+                                   IndexType.GPU_IVF_PQ.value,
+                               ],
 )
 
 CaseConfigParamInput_M_PQ = CaseConfigInput(
@@ -230,7 +240,7 @@ CaseConfigParamInput_M_PQ = CaseConfigInput(
         "value": 0,
     },
     isDisplayed=lambda config: config.get(CaseConfigParamType.IndexType, None)
-    in [IndexType.GPU_IVF_PQ.value],
+                               in [IndexType.GPU_IVF_PQ.value],
 )
 
 CaseConfigParamInput_Nbits_PQ = CaseConfigInput(
@@ -242,7 +252,7 @@ CaseConfigParamInput_Nbits_PQ = CaseConfigInput(
         "value": 8,
     },
     isDisplayed=lambda config: config.get(CaseConfigParamType.IndexType, None)
-    in [IndexType.GPU_IVF_PQ.value],
+                               in [IndexType.GPU_IVF_PQ.value],
 )
 
 CaseConfigParamInput_intermediate_graph_degree = CaseConfigInput(
@@ -254,7 +264,7 @@ CaseConfigParamInput_intermediate_graph_degree = CaseConfigInput(
         "value": 64,
     },
     isDisplayed=lambda config: config.get(CaseConfigParamType.IndexType, None)
-    in [IndexType.GPU_CAGRA.value],
+                               in [IndexType.GPU_CAGRA.value],
 )
 
 CaseConfigParamInput_graph_degree = CaseConfigInput(
@@ -266,7 +276,7 @@ CaseConfigParamInput_graph_degree = CaseConfigInput(
         "value": 32,
     },
     isDisplayed=lambda config: config.get(CaseConfigParamType.IndexType, None)
-    in [IndexType.GPU_CAGRA.value],
+                               in [IndexType.GPU_CAGRA.value],
 )
 
 CaseConfigParamInput_itopk_size = CaseConfigInput(
@@ -278,7 +288,7 @@ CaseConfigParamInput_itopk_size = CaseConfigInput(
         "value": 128,
     },
     isDisplayed=lambda config: config.get(CaseConfigParamType.IndexType, None)
-    in [IndexType.GPU_CAGRA.value],
+                               in [IndexType.GPU_CAGRA.value],
 )
 
 CaseConfigParamInput_team_size = CaseConfigInput(
@@ -290,7 +300,7 @@ CaseConfigParamInput_team_size = CaseConfigInput(
         "value": 0,
     },
     isDisplayed=lambda config: config.get(CaseConfigParamType.IndexType, None)
-    in [IndexType.GPU_CAGRA.value],
+                               in [IndexType.GPU_CAGRA.value],
 )
 
 CaseConfigParamInput_search_width = CaseConfigInput(
@@ -302,7 +312,7 @@ CaseConfigParamInput_search_width = CaseConfigInput(
         "value": 4,
     },
     isDisplayed=lambda config: config.get(CaseConfigParamType.IndexType, None)
-    in [IndexType.GPU_CAGRA.value],
+                               in [IndexType.GPU_CAGRA.value],
 )
 
 CaseConfigParamInput_min_iterations = CaseConfigInput(
@@ -314,7 +324,7 @@ CaseConfigParamInput_min_iterations = CaseConfigInput(
         "value": 0,
     },
     isDisplayed=lambda config: config.get(CaseConfigParamType.IndexType, None)
-    in [IndexType.GPU_CAGRA.value],
+                               in [IndexType.GPU_CAGRA.value],
 )
 
 CaseConfigParamInput_max_iterations = CaseConfigInput(
@@ -326,7 +336,7 @@ CaseConfigParamInput_max_iterations = CaseConfigInput(
         "value": 0,
     },
     isDisplayed=lambda config: config.get(CaseConfigParamType.IndexType, None)
-    in [IndexType.GPU_CAGRA.value],
+                               in [IndexType.GPU_CAGRA.value],
 )
 
 CaseConfigParamInput_build_algo = CaseConfigInput(
@@ -336,9 +346,8 @@ CaseConfigParamInput_build_algo = CaseConfigInput(
         "options": ["IVF_PQ", "NN_DESCENT"],
     },
     isDisplayed=lambda config: config.get(CaseConfigParamType.IndexType, None)
-    in [IndexType.GPU_CAGRA.value],
+                               in [IndexType.GPU_CAGRA.value],
 )
-
 
 CaseConfigParamInput_cache_dataset_on_device = CaseConfigInput(
     label=CaseConfigParamType.cache_dataset_on_device,
@@ -347,11 +356,11 @@ CaseConfigParamInput_cache_dataset_on_device = CaseConfigInput(
         "options": ["false", "true"],
     },
     isDisplayed=lambda config: config.get(CaseConfigParamType.IndexType, None)
-    in [
-        IndexType.GPU_CAGRA.value,
-        IndexType.GPU_IVF_PQ.value,
-        IndexType.GPU_IVF_FLAT.value,
-    ],
+                               in [
+                                   IndexType.GPU_CAGRA.value,
+                                   IndexType.GPU_IVF_PQ.value,
+                                   IndexType.GPU_IVF_FLAT.value,
+                               ],
 )
 
 CaseConfigParamInput_refine_ratio = CaseConfigInput(
@@ -364,11 +373,11 @@ CaseConfigParamInput_refine_ratio = CaseConfigInput(
         "step": 0.01,
     },
     isDisplayed=lambda config: config.get(CaseConfigParamType.IndexType, None)
-    in [
-        IndexType.GPU_CAGRA.value,
-        IndexType.GPU_IVF_PQ.value,
-        IndexType.GPU_IVF_FLAT.value,
-    ],
+                               in [
+                                   IndexType.GPU_CAGRA.value,
+                                   IndexType.GPU_IVF_PQ.value,
+                                   IndexType.GPU_IVF_FLAT.value,
+                               ],
 )
 
 CaseConfigParamInput_Lists = CaseConfigInput(
@@ -406,7 +415,7 @@ CaseConfigParamInput_QuantizationRatio_PgVectoRS = CaseConfigInput(
         "options": ["x4", "x8", "x16", "x32", "x64"],
     },
     isDisplayed=lambda config: config.get(CaseConfigParamType.quantizationType, None)
-    == "product",
+                               == "product",
 )
 
 CaseConfigParamInput_ZillizLevel = CaseConfigInput(
@@ -470,8 +479,19 @@ ESPerformanceConfig = [
     CaseConfigParamInput_NumCandidates_ES,
 ]
 
-PgVectorLoadingConfig = [CaseConfigParamInput_Lists]
-PgVectorPerformanceConfig = [CaseConfigParamInput_Lists, CaseConfigParamInput_Probes]
+PgVectorLoadingConfig = [
+    CaseConfigParamInput_IndexType,
+    CaseConfigParamInput_M,
+    CaseConfigParamInput_EFConstruction_PgVector,
+    CaseConfigParamInput_Lists
+]
+PgVectorPerformanceConfig = [
+    CaseConfigParamInput_IndexType,
+    CaseConfigParamInput_M,
+    CaseConfigParamInput_EFConstruction_PgVector,
+    CaseConfigParamInput_Lists,
+    CaseConfigParamInput_Probes
+]
 
 PgVectoRSLoadingConfig = [
     CaseConfigParamInput_IndexType,
