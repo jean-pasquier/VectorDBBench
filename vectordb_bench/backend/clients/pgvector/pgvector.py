@@ -103,29 +103,20 @@ class PgVector(VectorDB):
         self.cursor.execute(f'DROP INDEX IF EXISTS "{self._index_name}"')
         self.conn.commit()
 
-    def _get_index_type_str(self, index_type: IndexType):
-        match index_type:
-            case IndexType.HNSW:
-                return "hnsw"
-            case IndexType.IVFFlat:
-                return "ivfflat"
-            case _:
-                raise KeyError(f"{index_type.value} not supported on pgvector")
-
     def _create_index(self):
         assert self.conn is not None, "Connection is not initialized"
         assert self.cursor is not None, "Cursor is not initialized"
         
         index_param = self.case_config.index_param()
         query = f'CREATE INDEX IF NOT EXISTS {self._index_name} ON public."{self.table_name}"'
-        query += f' USING {self._get_index_type_str(index_param["index_type"])} (embedding {index_param["metric_type"]})'
+        query += f' USING {index_param["index_type"]} (embedding {index_param["metric_type"]})'
 
         options = ", ".join(f'{k} = {v}' for k, v in index_param.get("params", dict()).items())
         if options:
             query += f" WITH ({options})"
         query += ";"
 
-        print(query)
+        log.info(f"Pgvector client running: {query}")
         self.cursor.execute(query)
         self.conn.commit()
         

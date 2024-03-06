@@ -58,7 +58,7 @@ class HNSWConfig(PgVectorIndexConfig, DBCaseConfig):
     def index_param(self) -> dict:
         return {
             "metric_type": self.parse_metric(),
-            "index_type": self.index.value,
+            "index_type": "hnsw",
             "params": {"m": self.M, "ef_construction": self.efConstruction},
         }
 
@@ -70,21 +70,21 @@ class HNSWConfig(PgVectorIndexConfig, DBCaseConfig):
 
 
 class IVFFlatConfig(PgVectorIndexConfig, DBCaseConfig):
-    nlist: int
-    nprobe: int | None = None
+    lists: int
+    probes: int | None = None
     index: IndexType = IndexType.IVFFlat
 
     def index_param(self) -> dict:
         return {
             "metric_type": self.parse_metric(),
-            "index_type": self.index.value,
-            "params": {"nlist": self.nlist},
+            "index_type": "ivfflat",
+            "params": {"lists": self.lists},
         }
 
     def search_param(self) -> dict:
         return {
             "metric_type": self.parse_metric(),
-            "params": {"nprobe": self.nprobe},
+            "params": {"probes": self.probes},
         }
 
 
