@@ -22,8 +22,8 @@
         "db_case_config": {
           "index": "IVF_FLAT",
           "metric_type": "L2",
-          "nlist": 10,
-          "nprobe": 2
+          "lists": 10,
+          "probes": 2
         },
         "case_config": {
           "case_id": 1,
@@ -52,8 +52,8 @@
         "db_case_config": {
           "index": "IVF_FLAT",
           "metric_type": "L2",
-          "nlist": 10,
-          "nprobe": 2
+          "lists": 10,
+          "probes": 2
         },
         "case_config": {
           "case_id": 2,
@@ -82,8 +82,8 @@
         "db_case_config": {
           "index": "IVF_FLAT",
           "metric_type": "COSINE",
-          "nlist": 10,
-          "nprobe": 2
+          "lists": 10,
+          "probes": 2
         },
         "case_config": {
           "case_id": 5,
@@ -112,8 +112,8 @@
         "db_case_config": {
           "index": "IVF_FLAT",
           "metric_type": "COSINE",
-          "nlist": 10,
-          "nprobe": 2
+          "lists": 10,
+          "probes": 2
         },
         "case_config": {
           "case_id": 7,
@@ -142,8 +142,8 @@
         "db_case_config": {
           "index": "IVF_FLAT",
           "metric_type": "COSINE",
-          "nlist": 10,
-          "nprobe": 2
+          "lists": 10,
+          "probes": 2
         },
         "case_config": {
           "case_id": 9,
@@ -172,8 +172,8 @@
         "db_case_config": {
           "index": "IVF_FLAT",
           "metric_type": "COSINE",
-          "nlist": 10,
-          "nprobe": 2
+          "lists": 10,
+          "probes": 2
         },
         "case_config": {
           "case_id": 4,
@@ -202,8 +202,8 @@
         "db_case_config": {
           "index": "IVF_FLAT",
           "metric_type": "COSINE",
-          "nlist": 10,
-          "nprobe": 2
+          "lists": 10,
+          "probes": 2
         },
         "case_config": {
           "case_id": 6,
@@ -232,8 +232,8 @@
         "db_case_config": {
           "index": "IVF_FLAT",
           "metric_type": "COSINE",
-          "nlist": 10,
-          "nprobe": 2
+          "lists": 10,
+          "probes": 2
         },
         "case_config": {
           "case_id": 8,
