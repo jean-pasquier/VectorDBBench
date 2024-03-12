@@ -60,10 +60,13 @@ class HNSWConfig(PgVectorIndexConfig, DBCaseConfig):
             "metric_type": self.parse_metric(),
             "index_type": "hnsw",
             "params": {"m": self.M, "ef_construction": self.efConstruction},
+            # TODO parametrize these params
+            "config": {"maintenance_work_mem": "'4GB'", "max_parallel_maintenance_workers": "4"}
         }
 
     def search_param(self) -> dict:
         return {
+            "metric_fun_op": self.parse_metric_fun_op(),
             "metric_type": self.parse_metric(),
             "params": {"ef_search": self.ef},
         }
@@ -83,6 +86,7 @@ class IVFFlatConfig(PgVectorIndexConfig, DBCaseConfig):
 
     def search_param(self) -> dict:
         return {
+            "metric_fun_op": self.parse_metric_fun_op(),
             "metric_type": self.parse_metric(),
             "params": {"probes": self.probes},
         }

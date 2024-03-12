@@ -12,6 +12,7 @@ from ..api import VectorDB, DBCaseConfig, IndexType
 
 log = logging.getLogger(__name__) 
 
+
 class PgVector(VectorDB):
     """ Use SQLAlchemy instructions"""
     def __init__(
@@ -106,8 +107,12 @@ class PgVector(VectorDB):
     def _create_index(self):
         assert self.conn is not None, "Connection is not initialized"
         assert self.cursor is not None, "Cursor is not initialized"
-        
+
         index_param = self.case_config.index_param()
+
+        for config, config_value in index_param.get("config", {}).items():
+            self.cursor.execute(f"SET {config} = {config_value};")
+
         query = f'CREATE INDEX IF NOT EXISTS {self._index_name} ON public."{self.table_name}"'
         query += f' USING {index_param["index_type"]} (embedding {index_param["metric_type"]})'
 
@@ -173,10 +178,8 @@ class PgVector(VectorDB):
         assert self.cursor is not None, "Cursor is not initialized"
 
         search_param = self.case_config.search_param()
-        for param, param_value in search_param.items():
-            param_query = f'SET {self.case_config.index_param()["index_type"]}.{param} = {param_value}'
-            log.info(f"Search param: '{param_query}'")
-            self.cursor.execute(param_query)
+        for param, param_value in search_param["params"].items():
+            self.cursor.execute(f'SET {self.case_config.index_param()["index_type"]}.{param} = {param_value};')
         self.cursor.execute(f"SELECT id FROM public.\"{self.table_name}\" ORDER BY embedding {search_param['metric_fun_op']} '{query}' LIMIT {k};")
         self.conn.commit()
         result = self.cursor.fetchall()
