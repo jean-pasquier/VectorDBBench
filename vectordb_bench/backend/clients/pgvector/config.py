@@ -65,7 +65,7 @@ class HNSWConfig(PgVectorIndexConfig, DBCaseConfig):
     def search_param(self) -> dict:
         return {
             "metric_type": self.parse_metric(),
-            "params": {"ef": self.ef},
+            "params": {"ef_search": self.ef},
         }
 
 

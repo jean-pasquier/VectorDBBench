@@ -172,8 +172,11 @@ class PgVector(VectorDB):
         assert self.conn is not None, "Connection is not initialized"
         assert self.cursor is not None, "Cursor is not initialized"
 
-        search_param =self.case_config.search_param()
-        self.cursor.execute(f'SET ivfflat.probes = {search_param["probes"]}')
+        search_param = self.case_config.search_param()
+        for param, param_value in search_param.items():
+            param_query = f'SET {self.case_config.index_param()["index_type"]}.{param} = {param_value}'
+            log.info(f"Search param: '{param_query}'")
+            self.cursor.execute(param_query)
         self.cursor.execute(f"SELECT id FROM public.\"{self.table_name}\" ORDER BY embedding {search_param['metric_fun_op']} '{query}' LIMIT {k};")
         self.conn.commit()
         result = self.cursor.fetchall()
