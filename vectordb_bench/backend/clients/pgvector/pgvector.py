@@ -37,12 +37,10 @@ class PgVector(VectorDB):
         # construct basic units
         self.conn = psycopg2.connect(**self.db_config)
         self.conn.autocommit = False
-        self.cursor = self.conn.cursor() 
-        
-        # create vector extension
-        self.cursor.execute('CREATE EXTENSION IF NOT EXISTS vector')
+        self.cursor = self.conn.cursor()
+        self._create_extension()
         self.conn.commit()
-        
+
         if drop_old :
             log.info(f"Pgvector client drop table : {self.table_name}")
             # self.pg_table.drop(pg_engine, checkfirst=True)
@@ -50,11 +48,14 @@ class PgVector(VectorDB):
             self._drop_table()
             self._create_table(dim)
             self._create_index()
-        
+
         self.cursor.close()
         self.conn.close()
         self.cursor = None
         self.conn = None
+
+    def _create_extension(self):
+        self.cursor.execute('CREATE EXTENSION IF NOT EXISTS vector')
 
     @contextmanager
     def init(self) -> None:
@@ -67,7 +68,7 @@ class PgVector(VectorDB):
         self.conn = psycopg2.connect(**self.db_config)
         self.conn.autocommit = False
         self.cursor = self.conn.cursor()
-        
+
         try:
             yield
         finally:
@@ -75,20 +76,20 @@ class PgVector(VectorDB):
             self.conn.close()
             self.cursor = None
             self.conn = None
-    
+
     def _drop_table(self):
         assert self.conn is not None, "Connection is not initialized"
         assert self.cursor is not None, "Cursor is not initialized"
-        
+
         self.cursor.execute(f'DROP TABLE IF EXISTS public."{self.table_name}"')
         self.conn.commit()
-    
+
     def ready_to_load(self):
         pass
 
     def optimize(self):
         pass
-    
+
     def _post_insert(self):
         log.info(f"{self.name} post insert before optimize")
         self._drop_index()
@@ -96,11 +97,11 @@ class PgVector(VectorDB):
 
     def ready_to_search(self):
         pass
-        
+
     def _drop_index(self):
         assert self.conn is not None, "Connection is not initialized"
         assert self.cursor is not None, "Cursor is not initialized"
-        
+
         self.cursor.execute(f'DROP INDEX IF EXISTS "{self._index_name}"')
         self.conn.commit()
 
@@ -124,11 +125,11 @@ class PgVector(VectorDB):
         log.info(f"Pgvector client running: {query}")
         self.cursor.execute(query)
         self.conn.commit()
-        
+
     def _create_table(self, dim : int):
         assert self.conn is not None, "Connection is not initialized"
         assert self.cursor is not None, "Cursor is not initialized"
-        
+
         try:
             # create table
             self.cursor.execute(f'CREATE TABLE IF NOT EXISTS public."{self.table_name}" (id BIGINT PRIMARY KEY, embedding vector({dim}));')
@@ -158,16 +159,16 @@ class PgVector(VectorDB):
             csv_buffer.seek(0)
             self.cursor.copy_expert(f"COPY public.\"{self.table_name}\" FROM STDIN WITH (FORMAT CSV)", csv_buffer)
             self.conn.commit()
-            
+
             if kwargs.get("last_batch"):
                 self._post_insert()
-                
+
             return len(metadata), None
         except Exception as e:
-            log.warning(f"Failed to insert data into pgvector table ({self.table_name}), error: {e}")   
+            log.warning(f"Failed to insert data into pgvector table ({self.table_name}), error: {e}")
             return 0, e
 
-    def search_embedding(        
+    def search_embedding(
         self,
         query: list[float],
         k: int = 100,
@@ -185,4 +186,4 @@ class PgVector(VectorDB):
         result = self.cursor.fetchall()
 
         return [int(i[0]) for i in result]
-        
+

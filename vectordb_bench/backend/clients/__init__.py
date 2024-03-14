@@ -29,6 +29,7 @@ class DB(Enum):
     QdrantCloud = "QdrantCloud"
     WeaviateCloud = "WeaviateCloud"
     PgVector = "PgVector"
+    PgVectorCitus = "PgVectorOnCitus"
     PgVectoRS = "PgVectoRS"
     Redis = "Redis"
     Chroma = "Chroma"
@@ -64,6 +65,10 @@ class DB(Enum):
         if self == DB.PgVector:
             from .pgvector.pgvector import PgVector
             return PgVector
+
+        if self == DB.PgVectorCitus:
+            from .pgvector.citus import PgOnCitus
+            return PgOnCitus
 
         if self == DB.PgVectoRS:
             from .pgvecto_rs.pgvecto_rs import PgVectoRS
@@ -104,7 +109,7 @@ class DB(Enum):
             from .weaviate_cloud.config import WeaviateConfig
             return WeaviateConfig
 
-        if self == DB.PgVector:
+        if self == DB.PgVector or self == DB.PgVectorCitus:
             from .pgvector.config import PgVectorConfig
             return PgVectorConfig
 
@@ -144,6 +149,10 @@ class DB(Enum):
         if self == DB.PgVector:
             from .pgvector.config import _pgvector_case_config
             return _pgvector_case_config.get(index_type)
+
+        if self == DB.PgVectorCitus:
+            from .pgvector.citus import _pgvector_citus_case_config
+            return _pgvector_citus_case_config.get(index_type)
 
         if self == DB.PgVectoRS:
             from .pgvecto_rs.config import _pgvecto_rs_case_config

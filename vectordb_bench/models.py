@@ -60,6 +60,7 @@ class CaseConfigParamType(Enum):
     cache_dataset_on_device = "cache_dataset_on_device"
     refine_ratio = "refine_ratio"
     level = "level"
+    distribution_col = "distribution column"
 
 
 class CustomizedCase(BaseModel):
