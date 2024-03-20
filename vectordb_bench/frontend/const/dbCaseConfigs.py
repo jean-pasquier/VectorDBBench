@@ -81,6 +81,13 @@ CaseConfigParamInput_IndexTypePgVector = CaseConfigInput(
         ],
     },
 )
+CaseConfigParamInput_CitusDistributionCol = CaseConfigInput(
+    label=CaseConfigParamType.distribution_col,
+    inputType=InputType.Text,
+    inputConfig={
+        "value": "metadata1"
+    }
+)
 
 CaseConfigParamInput_M = CaseConfigInput(
     label=CaseConfigParamType.M,
@@ -519,6 +526,10 @@ PgVectorPerformanceConfig = [
     CaseConfigParamInput_EFSearch_PgVector,
 ]
 
+# Citus = pgvector + distribution column
+PgVectorCitusLoadingConfig = PgVectorLoadingConfig + [CaseConfigParamInput_CitusDistributionCol]
+PgVectorCitusPerformanceConfig = PgVectorPerformanceConfig + [CaseConfigParamInput_CitusDistributionCol]
+
 PgVectoRSLoadingConfig = [
     CaseConfigParamInput_IndexType,
     CaseConfigParamInput_M,
@@ -561,6 +572,10 @@ CASE_CONFIG_MAP = {
     DB.PgVector: {
         CaseLabel.Load: PgVectorLoadingConfig,
         CaseLabel.Performance: PgVectorPerformanceConfig,
+    },
+    DB.PgVectorCitus: {
+        CaseLabel.Load: PgVectorCitusLoadingConfig,
+        CaseLabel.Performance: PgVectorCitusPerformanceConfig,
     },
     DB.PgVectoRS: {
         CaseLabel.Load: PgVectoRSLoadingConfig,
