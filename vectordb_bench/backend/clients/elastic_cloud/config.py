@@ -1,4 +1,5 @@
 from enum import Enum
+
 from pydantic import SecretStr, BaseModel
 
 from ..api import DBConfig, DBCaseConfig, MetricType, IndexType
@@ -12,6 +13,15 @@ class ElasticCloudConfig(DBConfig, BaseModel):
         return {
             "cloud_id": self.cloud_id.get_secret_value(),
             "basic_auth": ("elastic", self.password.get_secret_value()),
+        }
+
+
+class ElasticsearchConfig(DBConfig, BaseModel):
+    hosts: str  # list of comma seperated hosts, with optional port. Eg "https://1.host:443,https://2.host:443"
+
+    def to_dict(self) -> dict:
+        return {
+            "hosts": self.hosts.split(","),
         }
 
 

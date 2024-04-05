@@ -26,6 +26,7 @@ class DB(Enum):
     ZillizCloud = "ZillizCloud"
     Pinecone = "Pinecone"
     ElasticCloud = "ElasticCloud"
+    Elasticsearch = "Elasticsearch"
     QdrantCloud = "QdrantCloud"
     WeaviateCloud = "WeaviateCloud"
     PgVector = "PgVector"
@@ -50,7 +51,7 @@ class DB(Enum):
             from .pinecone.pinecone import Pinecone
             return Pinecone
 
-        if self == DB.ElasticCloud:
+        if self == DB.ElasticCloud or self == DB.Elasticsearch:
             from .elastic_cloud.elastic_cloud import ElasticCloud
             return ElasticCloud
 
@@ -100,6 +101,10 @@ class DB(Enum):
         if self == DB.ElasticCloud:
             from .elastic_cloud.config import ElasticCloudConfig
             return ElasticCloudConfig
+
+        if self == DB.Elasticsearch:
+            from .elastic_cloud.config import ElasticsearchConfig
+            return ElasticsearchConfig
 
         if self == DB.QdrantCloud:
             from .qdrant_cloud.config import QdrantConfig
