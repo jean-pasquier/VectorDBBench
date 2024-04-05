@@ -569,6 +569,10 @@ CASE_CONFIG_MAP = {
         CaseLabel.Load: ESLoadingConfig,
         CaseLabel.Performance: ESPerformanceConfig,
     },
+    DB.Elasticsearch: {
+        CaseLabel.Load: ESLoadingConfig,
+        CaseLabel.Performance: ESPerformanceConfig,
+    },
     DB.PgVector: {
         CaseLabel.Load: PgVectorLoadingConfig,
         CaseLabel.Performance: PgVectorPerformanceConfig,
